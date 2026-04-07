@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boletín DPI · CFIA · Edición 1 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:       #080F1C;
+  --navy-mid:   #0F1E35;
+  --navy-card:  #162847;
+  --slate:      #3A506B;
+  --slate-mid:  #546E8A;
+  --slate-light:#7A97B3;
+  --teal:       #00B4A6;
+  --teal-dim:   #007E74;
+  --teal-glow:  #33C9BE;
+  --orange:     #FF6B2B;
+  --orange-dim: #CC5520;
+  --white:      #F4F7FC;
+  --white-dim:  #C8D5E8;
+  --muted:      #7A97B3;
+  --a4w: 794px;
+  --a4h: 1123px;
+}
+body {
+  background: #0a0f1a;
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  gap: 1.5rem;
+}
+
+/* ── NAV ─────────────────────── */
+.mag-nav {
+  display: flex; align-items: center; gap: 0.8rem;
+  position: sticky; top: 1rem; z-index: 100;
+  background: rgba(8,15,28,0.93);
+  border: 1px solid rgba(0,180,166,0.25);
+  border-radius: 40px;
+  padding: 0.45rem 1.1rem;
+  backdrop-filter: blur(12px);
+}
+.mag-nav button {
+  background: none; border: none; color: var(--teal); cursor: pointer;
+  font-size: 0.85rem; padding: 0.3rem 0.65rem; border-radius: 20px;
+  transition: background .2s; font-family:'Montserrat',sans-serif; font-weight:600;
+}
+.mag-nav button:hover { background: rgba(0,180,166,0.15); }
+.mag-nav button:disabled { opacity:.3; cursor:default; }
+.dot { width:7px; height:7px; border-radius:50%; background:var(--slate); cursor:pointer; transition:all .25s; }
+.dot.active { background:var(--teal); transform:scale(1.4); }
+.page-dots { display:flex; gap:6px; align-items:center; }
+.page-label { font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:600; letter-spacing:.15em; color:var(--muted); text-transform:uppercase; white-space:nowrap; }
+
+/* ── PAGE SHELL ─────────────── */
+.page-container { width: var(--a4w); position:relative; }
+.page {
+  width: var(--a4w); min-height: var(--a4h);
+  position:relative; overflow:hidden; display:none;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(0,180,166,.1);
+}
+.page.active { display:block; }
+.pg-num {
+  position:absolute; bottom:1.8rem; right:2.5rem;
+  font-family:'Montserrat',sans-serif; font-size:.6rem; font-weight:700;
+  letter-spacing:.2em; color:var(--muted); text-transform:uppercase; z-index:10;
+}
+
+/* ──────────────────────────────────────────
+   PÁGINA 1 — PORTADA
+─────────────────────────────────────────── */
+.cover { background:var(--navy); }
+.cover-grid {
+  position:absolute; inset:0;
+  background-image: linear-gradient(rgba(0,180,166,.04) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(0,180,166,.04) 1px,transparent 1px);
+  background-size:46px 46px;
+}
+.cover-accent1 {
+  position:absolute; top:-60px; right:-60px;
+  width:380px; height:780px;
+  background:linear-gradient(175deg,var(--teal-dim) 0%,transparent 65%);
+  transform:rotate(18deg); opacity:.15;
+}
+.cover-accent2 {
+  position:absolute; bottom:-80px; left:-40px;
+  width:300px; height:500px;
+  background:linear-gradient(355deg,var(--orange-dim) 0%,transparent 70%);
+  transform:rotate(-12deg); opacity:.1;
+}
+.cover-stripe {
+  position:absolute; left:0; top:0; bottom:0;
+  width:5px; background:linear-gradient(to bottom,var(--teal) 0%,transparent 100%);
+}
+.cover-topbar {
+  position:relative; z-index:2;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:2.2rem 3rem 0;
+}
+.cover-pub {
+  font-family:'Montserrat',sans-serif; font-size:.6rem; font-weight:700;
+  letter-spacing:.28em; color:var(--teal); text-transform:uppercase;
+}
+.cover-meta {
+  font-family:'Barlow',sans-serif; font-size:.63rem;
+  letter-spacing:.1em; color:var(--muted); text-align:right; text-transform:uppercase;
+}
+.cover-rule {
+  margin:1.8rem 3rem 0; height:1px;
+  background:linear-gradient(to right,var(--teal) 0%,rgba(0,180,166,.15) 60%,transparent 100%);
+  position:relative; z-index:2;
+}
+.cover-hero { position:relative; z-index:2; padding:3.2rem 3rem 0; }
+.cover-eyebrow {
+  font-family:'Barlow Condensed',sans-serif; font-size:.7rem; font-weight:500;
+  letter-spacing:.3em; color:var(--orange); text-transform:uppercase; margin-bottom:1rem;
+}
+.cover-title {
+  font-family:'Montserrat',sans-serif; font-size:4.6rem; font-weight:900;
+  line-height:.92; letter-spacing:-.02em; text-transform:uppercase; color:var(--white);
+}
+.cover-title span { color:var(--teal); display:block; }
+.cover-sub {
+  margin-top:1.6rem; font-family:'Barlow',sans-serif; font-size:1rem;
+  font-weight:300; color:var(--white-dim); line-height:1.55; max-width:430px;
+}
+.cover-chips {
+  margin-top:2rem; display:flex; flex-wrap:wrap; gap:.5rem; position:relative; z-index:2;
+  padding:0 3rem;
+}
+.chip {
+  border:1px solid rgba(0,180,166,.3); padding:.3rem .8rem;
+  font-family:'Barlow Condensed',sans-serif; font-size:.58rem; font-weight:600;
+  letter-spacing:.14em; color:var(--teal); text-transform:uppercase;
+}
+.chip.orange { border-color:rgba(255,107,43,.35); color:var(--orange); }
+.cover-articles {
+  position:relative; z-index:2; margin:2rem 3rem 0;
+  display:grid; grid-template-columns:1fr 1fr; gap:1px;
+  background:rgba(58,80,107,.3); border:1px solid rgba(58,80,107,.3); border-bottom:none;
+}
+.cov-art {
+  background:var(--navy-mid); padding:.9rem 1rem;
+}
+.cov-art-dept {
+  font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:700;
+  letter-spacing:.2em; color:var(--teal); text-transform:uppercase; margin-bottom:.3rem;
+}
+.cov-art-title {
+  font-family:'Barlow',sans-serif; font-size:.78rem; font-weight:600;
+  color:var(--white); line-height:1.35;
+}
+.cov-art-author { font-family:'Barlow',sans-serif; font-size:.62rem; color:var(--muted); margin-top:.2rem; }
+.cover-footer {
+  position:relative; z-index:2; margin:0 3rem;
+  padding:.9rem 0 2rem; border-top:1px solid rgba(58,80,107,.4);
+  display:flex; align-items:center; justify-content:space-between; margin-top:1rem;
+}
+.cov-footer-l { font-family:'Montserrat',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.15em; color:var(--slate-mid); text-transform:uppercase; }
+.cov-footer-r { font-family:'Barlow',sans-serif; font-size:.6rem; color:var(--slate-mid); }
+
+/* ──────────────────────────────────────────
+   PÁGINA 2 — ÍNDICE
+─────────────────────────────────────────── */
+.toc { background:var(--white); color:var(--navy); }
+.toc-sidebar {
+  position:absolute; left:0; top:0; bottom:0; width:200px;
+  background:var(--navy); display:flex; flex-direction:column; padding:2.5rem 1.6rem; z-index:2;
+}
+.toc-side-label { font-family:'Montserrat',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.3em; color:var(--teal); text-transform:uppercase; margin-bottom:.7rem; }
+.toc-side-title { font-family:'Montserrat',sans-serif; font-size:1.5rem; font-weight:800; color:var(--white); line-height:1.15; text-transform:uppercase; letter-spacing:-.01em; margin-bottom:1.8rem; }
+.toc-side-div { width:36px; height:2px; background:var(--teal); margin-bottom:1.8rem; }
+.toc-side-desc { font-family:'Barlow',sans-serif; font-size:.73rem; font-weight:300; color:var(--muted); line-height:1.65; }
+.toc-side-tags { margin-top:auto; display:flex; flex-direction:column; gap:.45rem; }
+.toc-tag { font-family:'Barlow Condensed',sans-serif; font-size:.6rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:.3rem .6rem; border:1px solid rgba(0,180,166,.25); color:var(--teal); width:fit-content; }
+.toc-main { margin-left:200px; padding:2.3rem 2.3rem 1.5rem; display:flex; flex-direction:column; min-height:var(--a4h); }
+.toc-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.8rem; padding-bottom:.9rem; border-bottom:1px solid rgba(58,80,107,.2); }
+.toc-issue { font-family:'Barlow Condensed',sans-serif; font-size:.63rem; font-weight:600; letter-spacing:.2em; color:var(--orange); text-transform:uppercase; }
+.toc-date { font-family:'Barlow',sans-serif; font-size:.63rem; color:var(--slate); }
+.toc-section { margin-bottom:1.2rem; }
+.toc-sec-hdr { font-family:'Montserrat',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.26em; text-transform:uppercase; color:var(--teal-dim); padding-bottom:.45rem; border-bottom:1px solid rgba(0,126,116,.2); margin-bottom:.6rem; }
+.toc-entry { display:flex; align-items:flex-start; gap:.9rem; padding:.5rem 0; border-bottom:1px dotted rgba(58,80,107,.15); cursor:pointer; transition:all .2s; }
+.toc-entry:hover { background:rgba(0,180,166,.04); padding-left:.35rem; }
+.toc-entry:last-child { border-bottom:none; }
+.toc-pg { font-family:'Montserrat',sans-serif; font-size:.72rem; font-weight:700; color:var(--teal-dim); min-width:22px; margin-top:.05rem; }
+.toc-etitle { font-family:'Barlow',sans-serif; font-size:.83rem; font-weight:600; color:var(--navy); line-height:1.3; }
+.toc-eauthor { font-family:'Barlow',sans-serif; font-size:.68rem; font-weight:300; color:var(--slate); margin-top:.15rem; }
+.etag { font-family:'Barlow Condensed',sans-serif; font-size:.55rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; padding:.18rem .45rem; border-radius:2px; white-space:nowrap; align-self:flex-start; }
+.etag-t { background:rgba(0,180,166,.1); color:var(--teal-dim); }
+.etag-o { background:rgba(255,107,43,.1); color:var(--orange-dim); }
+.etag-s { background:rgba(58,80,107,.1); color:var(--slate); }
+.toc-featured { margin-top:auto; background:var(--navy-mid); border-left:3px solid var(--teal); padding:1.1rem 1.3rem; display:grid; grid-template-columns:1fr auto; gap:1rem; align-items:center; }
+.toc-feat-l { }
+.toc-feat-tag { font-family:'Montserrat',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.22em; color:var(--teal); text-transform:uppercase; margin-bottom:.4rem; }
+.toc-feat-title { font-family:'Montserrat',sans-serif; font-size:.95rem; font-weight:700; color:var(--white); line-height:1.25; }
+.toc-feat-pg { font-family:'Montserrat',sans-serif; font-size:3.2rem; font-weight:900; color:rgba(0,180,166,.15); line-height:1; letter-spacing:-.04em; text-align:right; }
+
+/* ──────────────────────────────────────────
+   PÁGINAS DE ARTÍCULO — BASE
+─────────────────────────────────────────── */
+.art-page { background:var(--white); color:var(--navy); }
+.art-header { background:var(--navy); padding:2rem 3rem 1.8rem; position:relative; overflow:hidden; }
+.art-header-grid {
+  position:absolute; inset:0;
+  background-image:linear-gradient(rgba(0,180,166,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,180,166,.05) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.art-dept {
+  font-family:'Montserrat',sans-serif; font-size:.55rem; font-weight:700;
+  letter-spacing:.28em; color:var(--orange); text-transform:uppercase;
+  position:relative; z-index:1; margin-bottom:.8rem;
+  display:flex; align-items:center; gap:.7rem;
+}
+.art-dept::before { content:''; width:18px; height:2px; background:var(--orange); }
+.art-title {
+  font-family:'Montserrat',sans-serif; font-size:2rem; font-weight:800;
+  color:var(--white); line-height:1.1; letter-spacing:-.015em; position:relative; z-index:1; max-width:500px;
+}
+.art-meta { display:flex; align-items:center; gap:1.3rem; margin-top:1rem; position:relative; z-index:1; }
+.art-author-chip { display:flex; align-items:center; gap:.5rem; }
+.av { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--teal-dim),var(--navy-card)); display:flex; align-items:center; justify-content:center; font-family:'Montserrat',sans-serif; font-size:.55rem; font-weight:700; color:var(--teal-glow); border:1px solid rgba(0,180,166,.3); }
+.av-name { font-family:'Barlow',sans-serif; font-size:.7rem; font-weight:600; color:var(--white); }
+.av-role { font-family:'Barlow',sans-serif; font-size:.6rem; color:var(--muted); }
+.art-edition { font-family:'Barlow',sans-serif; font-size:.62rem; color:var(--muted); padding-left:1.3rem; border-left:1px solid rgba(122,151,179,.3); }
+.art-body { display:grid; grid-template-columns:1fr 220px; }
+.art-main { padding:1.8rem 2rem; border-right:1px solid rgba(58,80,107,.12); }
+.art-lead { font-family:'Barlow',sans-serif; font-size:.98rem; font-weight:400; color:var(--slate); line-height:1.65; margin-bottom:1.2rem; border-left:3px solid var(--teal); padding-left:.9rem; }
+.art-text { font-family:'Barlow',sans-serif; font-size:.8rem; color:#2a3a50; line-height:1.78; margin-bottom:.9rem; }
+.art-h2 { font-family:'Montserrat',sans-serif; font-size:.85rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:.07em; margin:1.3rem 0 .6rem; display:flex; align-items:center; gap:.55rem; }
+.art-h2::before { content:''; width:10px; height:2px; background:var(--teal); }
+.pullquote { margin:1.3rem 0; padding:1rem 1.2rem; background:var(--navy); border-left:4px solid var(--teal); }
+.pullquote-text { font-family:'Barlow',sans-serif; font-size:.93rem; font-weight:400; font-style:italic; color:var(--white); line-height:1.6; }
+.pullquote-src { margin-top:.5rem; font-family:'Montserrat',sans-serif; font-size:.55rem; font-weight:700; letter-spacing:.14em; color:var(--teal); text-transform:uppercase; }
+.art-sidebar { padding:1.4rem 1.2rem; background:#f8fafc; display:flex; flex-direction:column; gap:1.1rem; }
+.sb-label { font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:700; letter-spacing:.26em; color:var(--teal-dim); text-transform:uppercase; margin-bottom:.5rem; padding-bottom:.35rem; border-bottom:1px solid rgba(0,126,116,.2); }
+.sb-stat { text-align:center; padding:.75rem; background:var(--navy); border-radius:2px; }
+.sb-stat-num { font-family:'Montserrat',sans-serif; font-size:1.7rem; font-weight:800; color:var(--teal); line-height:1; }
+.sb-stat-lbl { font-family:'Barlow',sans-serif; font-size:.6rem; color:var(--muted); margin-top:.25rem; text-transform:uppercase; letter-spacing:.05em; line-height:1.35; }
+.sb-stat.orange .sb-stat-num { color:var(--orange); }
+.kf { display:flex; align-items:flex-start; gap:.5rem; margin-bottom:.5rem; }
+.kf-dot { width:18px; height:18px; border-radius:50%; background:rgba(0,180,166,.12); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.kf-dot::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--teal); display:block; }
+.kf-text { font-family:'Barlow',sans-serif; font-size:.7rem; color:var(--slate); line-height:1.45; }
+.sb-fuente { font-family:'Barlow',sans-serif; font-size:.62rem; color:var(--slate-mid); line-height:1.5; margin-top:.2rem; }
+.sb-fuente a { color:var(--teal-dim); word-break:break-all; }
+
+/* ──────────────────────────────────────────
+   PÁGINA 4 — DOS ARTÍCULOS (Cambio Climático)
+─────────────────────────────────────────── */
+.twoart { background:var(--white); color:var(--navy); }
+.twoart-section { border-bottom:3px solid rgba(58,80,107,.12); }
+.twoart-section:last-child { border-bottom:none; }
+.twoart-header { padding:1.5rem 2.5rem 1.2rem; background:var(--navy); position:relative; overflow:hidden; }
+.twoart-header .art-header-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,166,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,166,.05) 1px,transparent 1px); background-size:24px 24px; }
+.twoart-dept { font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:700; letter-spacing:.26em; color:var(--teal); text-transform:uppercase; position:relative; z-index:1; margin-bottom:.6rem; display:flex; align-items:center; gap:.6rem; }
+.twoart-dept::before { content:''; width:14px; height:2px; background:var(--teal); }
+.twoart-dept.orange { color:var(--orange); }
+.twoart-dept.orange::before { background:var(--orange); }
+.twoart-title { font-family:'Montserrat',sans-serif; font-size:1.45rem; font-weight:800; color:var(--white); line-height:1.1; letter-spacing:-.01em; position:relative; z-index:1; max-width:520px; }
+.twoart-meta { display:flex; align-items:center; gap:1rem; margin-top:.75rem; position:relative; z-index:1; }
+.twoart-body { display:grid; grid-template-columns:1fr 190px; }
+.twoart-main { padding:1.2rem 2rem; border-right:1px solid rgba(58,80,107,.12); }
+.twoart-lead { font-family:'Barlow',sans-serif; font-size:.88rem; font-weight:400; color:var(--slate); line-height:1.65; margin-bottom:.9rem; border-left:3px solid var(--teal); padding-left:.8rem; }
+.twoart-text { font-family:'Barlow',sans-serif; font-size:.77rem; color:#2a3a50; line-height:1.75; margin-bottom:.7rem; }
+.twoart-sidebar { padding:1.1rem 1rem; background:#f8fafc; display:flex; flex-direction:column; gap:.9rem; }
+.twoart-pullquote { margin:.9rem 0; padding:.8rem 1rem; background:var(--navy); border-left:3px solid var(--teal); }
+.twoart-pullquote.orange { border-left-color:var(--orange); }
+.twoart-pullquote .pullquote-text { font-size:.82rem; }
+.twoart-pullquote .pullquote-src { font-size:.5rem; }
+
+/* ──────────────────────────────────────────
+   PÁGINA 5 — PRS + BAECS
+─────────────────────────────────────────── */
+.combo { background:var(--navy); }
+.combo-header { padding:2rem 3rem 1.5rem; border-bottom:1px solid rgba(0,180,166,.12); position:relative; }
+.combo-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,166,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,166,.03) 1px,transparent 1px); background-size:28px 28px; }
+.combo-top { display:flex; justify-content:space-between; align-items:flex-end; position:relative; z-index:1; }
+.combo-label { font-family:'Montserrat',sans-serif; font-size:.55rem; font-weight:700; letter-spacing:.28em; color:var(--teal); text-transform:uppercase; margin-bottom:.45rem; }
+.combo-title { font-family:'Montserrat',sans-serif; font-size:1.75rem; font-weight:800; color:var(--white); line-height:1.1; letter-spacing:-.015em; }
+.combo-title span { color:var(--teal); }
+.combo-badge { font-family:'Barlow',sans-serif; font-size:.68rem; color:var(--muted); text-align:right; }
+.combo-cards { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1.5rem 3rem; }
+.combo-card { background:var(--navy-mid); border:1px solid rgba(58,80,107,.3); padding:1.3rem; position:relative; }
+.combo-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+.combo-card.teal::before { background:var(--teal); }
+.combo-card.orange::before { background:var(--orange); }
+.cc-dept { font-family:'Montserrat',sans-serif; font-size:.5rem; font-weight:700; letter-spacing:.2em; color:var(--teal); text-transform:uppercase; margin-bottom:.35rem; }
+.cc-dept.orange { color:var(--orange); }
+.cc-title { font-family:'Montserrat',sans-serif; font-size:.95rem; font-weight:700; color:var(--white); line-height:1.25; margin-bottom:.6rem; }
+.cc-text { font-family:'Barlow',sans-serif; font-size:.73rem; color:var(--muted); line-height:1.65; margin-bottom:.9rem; }
+.cc-author-row { display:flex; align-items:center; gap:.55rem; margin-bottom:.6rem; }
+.cc-quote { background:rgba(0,0,0,.2); border-left:3px solid var(--teal); padding:.6rem .8rem; margin-top:.8rem; }
+.cc-quote.orange { border-left-color:var(--orange); }
+.cc-quote-text { font-family:'Barlow',sans-serif; font-size:.72rem; font-style:italic; color:var(--white-dim); line-height:1.55; }
+.cc-badge { font-family:'Barlow Condensed',sans-serif; font-size:.56rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; padding:.18rem .45rem; border-radius:2px; }
+.ccb-teal { background:rgba(0,180,166,.12); color:var(--teal); }
+.ccb-orange { background:rgba(255,107,43,.12); color:var(--orange); }
+.combo-stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin:0 3rem; background:rgba(58,80,107,.2); border:1px solid rgba(58,80,107,.2); }
+.csr { background:var(--navy-mid); padding:1rem; }
+.csr-val { font-family:'Montserrat',sans-serif; font-size:1.7rem; font-weight:800; color:var(--white); line-height:1; letter-spacing:-.02em; }
+.csr-val .unit { font-size:.8rem; font-weight:500; color:var(--teal); }
+.csr-lbl { font-family:'Barlow',sans-serif; font-size:.62rem; color:var(--muted); margin-top:.4rem; text-transform:uppercase; letter-spacing:.05em; }
+.combo-wide { margin:1.5rem 3rem 0; background:var(--navy-mid); border:1px solid rgba(58,80,107,.3); border-left:4px solid var(--orange); padding:1.2rem 1.4rem; }
+.cw-label { font-family:'Montserrat',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.22em; color:var(--orange); text-transform:uppercase; margin-bottom:.45rem; }
+.cw-title { font-family:'Montserrat',sans-serif; font-size:.95rem; font-weight:700; color:var(--white); line-height:1.25; margin-bottom:.4rem; }
+.cw-text { font-family:'Barlow',sans-serif; font-size:.73rem; color:var(--muted); line-height:1.6; }
+.combo-footer { margin:1.5rem 3rem 0; padding:.9rem 0 1.8rem; border-top:1px solid rgba(58,80,107,.3); display:flex; align-items:center; justify-content:space-between; }
+.cf-l { font-family:'Barlow',sans-serif; font-size:.6rem; color:var(--slate-mid); font-style:italic; }
+.cf-r { font-family:'Montserrat',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.16em; color:var(--slate-mid); text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="mag-nav" id="nav">
+  <button id="prevBtn" onclick="changePage(-1)" disabled>&#8592; Anterior</button>
+  <div class="page-dots" id="dots"></div>
+  <button id="nextBtn" onclick="changePage(1)">Siguiente &#8594;</button>
+  <span class="page-label" id="pageLabel">01 / 05 — Portada</span>
+</nav>
+
+<div class="page-container">
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 1 — PORTADA
+════════════════════════════════════════════════ -->
+<section class="page cover active" id="page-1">
+  <div class="cover-grid"></div>
+  <div class="cover-accent1"></div>
+  <div class="cover-accent2"></div>
+  <div class="cover-stripe"></div>
+
+  <div class="cover-topbar">
+    <div class="cover-pub">Departamento de Planificación Institucional &nbsp;·&nbsp; CFIA</div>
+    <div class="cover-meta">Edici&oacute;n 1 &nbsp;·&nbsp; Febrero – Abril 2026<br>Bolet&iacute;n Institucional DPI</div>
+  </div>
+  <div class="cover-rule"></div>
+
+  <div class="cover-hero">
+    <div class="cover-eyebrow">&#9632; Bolet&iacute;n DPI &nbsp;·&nbsp; Innovaci&oacute;n &amp; Sostenibilidad</div>
+    <div class="cover-title">
+      Bolet&iacute;n<span>DPI</span>
+    </div>
+    <div class="cover-sub">
+      Vivienda social, sostenibilidad ambiental, responsabilidad solidaria y adaptaci&oacute;n al cambio clim&aacute;tico: as&iacute; trabaja el CFIA por Costa Rica.
+    </div>
+  </div>
+
+  <div class="cover-chips">
+    <div class="chip">Auditor&iacute;a de Vivienda</div>
+    <div class="chip">Bandera Azul BAECS</div>
+    <div class="chip orange">Cambio Clim&aacute;tico</div>
+    <div class="chip orange">Responsabilidad Solidaria</div>
+    <div class="chip">Ingenier&iacute;a Sostenible</div>
+  </div>
+
+  <div class="cover-articles" style="margin-top:1.8rem;">
+    <div class="cov-art">
+      <div class="cov-art-dept">&#9632; Investigaci&oacute;n y An&aacute;lisis</div>
+      <div class="cov-art-title">Kil&oacute;metros, familias y esperanza: as&iacute; vivimos la Auditor&iacute;a</div>
+      <div class="cov-art-author">Marcial Rivera &nbsp;·&nbsp; Feb 2026</div>
+    </div>
+    <div class="cov-art">
+      <div class="cov-art-dept">&#9632; Sostenibilidad</div>
+      <div class="cov-art-title">Bandera Azul Construcci&oacute;n Sostenible (BAECS) y voluntariado ambiental</div>
+      <div class="cov-art-author">Marielieth Garro Mora &nbsp;·&nbsp; Feb &amp; Abr 2026</div>
+    </div>
+    <div class="cov-art">
+      <div class="cov-art-dept">&#9632; Cambio Clim&aacute;tico</div>
+      <div class="cov-art-title">C&oacute;digo de Adaptaci&oacute;n al Cambio Clim&aacute;tico para infraestructura</div>
+      <div class="cov-art-author">Laura Porras Herrera &nbsp;·&nbsp; Feb 2026</div>
+    </div>
+    <div class="cov-art">
+      <div class="cov-art-dept">&#9632; Responsabilidad Solidaria</div>
+      <div class="cov-art-title">Ingenieros y Arquitectos comprometidos con el desarrollo social del pa&iacute;s</div>
+      <div class="cov-art-author">Arq. Deganit S&aacute;nchez Acevedo &nbsp;·&nbsp; Feb 2026</div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cov-footer-l">CFIA &mdash; Colegio Federado de Ingenieros y Arquitectos de Costa Rica</div>
+    <div class="cov-footer-r">cfia.or.cr &nbsp;·&nbsp; 2026</div>
+  </div>
+  <div class="pg-num">01 / 05</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 2 — ÍNDICE
+════════════════════════════════════════════════ -->
+<section class="page toc" id="page-2">
+  <div class="toc-sidebar">
+    <div class="toc-side-label">&#9632; &Iacute;ndice</div>
+    <div class="toc-side-title">Contenido</div>
+    <div class="toc-side-div"></div>
+    <div class="toc-side-desc">
+      Primera edici&oacute;n del Bolet&iacute;n DPI, con los avances, logros e iniciativas del Departamento de Planificaci&oacute;n Institucional del CFIA durante los primeros meses de 2026.
+    </div>
+    <div class="toc-side-tags">
+      <span class="toc-tag">Vivienda Social</span>
+      <span class="toc-tag">Sostenibilidad</span>
+      <span class="toc-tag">Clima</span>
+      <span class="toc-tag">Solidaridad</span>
+    </div>
+  </div>
+
+  <div class="toc-main">
+    <div class="toc-topbar">
+      <span class="toc-issue">&#9632; Edici&oacute;n 1 &nbsp;·&nbsp; 2026</span>
+      <span class="toc-date">Febrero – Abril 2026 &nbsp;·&nbsp; Bolet&iacute;n Institucional DPI</span>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-sec-hdr">&#9632; Investigaci&oacute;n y An&aacute;lisis</div>
+      <div class="toc-entry" onclick="goToPage(3)">
+        <div class="toc-pg">03</div>
+        <div style="flex:1">
+          <div class="toc-etitle">Kil&oacute;metros, familias y esperanza: as&iacute; vivimos la Auditor&iacute;a de Vivienda</div>
+          <div class="toc-eauthor">Marcial Rivera &nbsp;·&nbsp; Investigaci&oacute;n y An&aacute;lisis &nbsp;·&nbsp; Febrero 2026 &nbsp;·&nbsp; 1&ordf; edici&oacute;n</div>
+        </div>
+        <div class="etag etag-t">Investigaci&oacute;n</div>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-sec-hdr">&#9632; Cambio Clim&aacute;tico</div>
+      <div class="toc-entry" onclick="goToPage(4)">
+        <div class="toc-pg">04</div>
+        <div style="flex:1">
+          <div class="toc-etitle">C&oacute;digo de Adaptaci&oacute;n al Cambio Clim&aacute;tico: preparando la infraestructura del pa&iacute;s</div>
+          <div class="toc-eauthor">Laura Porras Herrera &nbsp;·&nbsp; &Aacute;rea Cambio Clim&aacute;tico &nbsp;·&nbsp; Febrero 2026</div>
+        </div>
+        <div class="etag etag-t">Innovaci&oacute;n</div>
+      </div>
+      <div class="toc-entry" onclick="goToPage(4)">
+        <div class="toc-pg">04</div>
+        <div style="flex:1">
+          <div class="toc-etitle">El agua como sistema: ingenier&iacute;a en comunidades resilientes</div>
+          <div class="toc-eauthor">Vivian Monge Alvarado &nbsp;·&nbsp; Cambio Clim&aacute;tico &nbsp;·&nbsp; D&iacute;a Mundial Ingenier&iacute;a Sostenible 2026</div>
+        </div>
+        <div class="etag etag-o">Sostenibilidad</div>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-sec-hdr">&#9632; Sostenibilidad Ambiental</div>
+      <div class="toc-entry" onclick="goToPage(5)">
+        <div class="toc-pg">05</div>
+        <div style="flex:1">
+          <div class="toc-etitle">Bandera Azul Construcci&oacute;n Sostenible (BAECS) y voluntariado ambiental &mdash; Ed. 1 y Ed. 2</div>
+          <div class="toc-eauthor">Marielieth Garro Mora &nbsp;·&nbsp; Sostenibilidad &nbsp;·&nbsp; Febrero &amp; Abril 2026</div>
+        </div>
+        <div class="etag etag-t">Ambiente</div>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-sec-hdr">&#9632; Programa Responsabilidad Solidaria</div>
+      <div class="toc-entry" onclick="goToPage(5)">
+        <div class="toc-pg">05</div>
+        <div style="flex:1">
+          <div class="toc-etitle">Ingenieros y Arquitectos solidariamente comprometidos con el desarrollo social y econ&oacute;mico del pa&iacute;s</div>
+          <div class="toc-eauthor">Arq. Deganit S&aacute;nchez Acevedo &nbsp;·&nbsp; PRS &nbsp;·&nbsp; Febrero 2026 &nbsp;·&nbsp; 1&ordf; edici&oacute;n</div>
+        </div>
+        <div class="etag etag-s">Social</div>
+      </div>
+    </div>
+
+    <div class="toc-featured">
+      <div>
+        <div class="toc-feat-tag">&#9632; Nota Destacada</div>
+        <div class="toc-feat-title">Costa Rica: primer pa&iacute;s del mundo con un C&oacute;digo de Adaptaci&oacute;n al Cambio Clim&aacute;tico para infraestructura</div>
+      </div>
+      <div class="toc-feat-pg">04</div>
+    </div>
+  </div>
+  <div class="pg-num" style="color:var(--slate-light);">02 / 05</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 3 — AUDITORÍA DE VIVIENDA
+════════════════════════════════════════════════ -->
+<section class="page art-page" id="page-3">
+  <div class="art-header">
+    <div class="art-header-grid"></div>
+    <div class="art-dept">Investigaci&oacute;n y An&aacute;lisis &nbsp;·&nbsp; 1&ordf; edici&oacute;n &nbsp;·&nbsp; Febrero 2026</div>
+    <div class="art-title">Kil&oacute;metros, familias y esperanza: as&iacute; vivimos la Auditor&iacute;a</div>
+    <div class="art-meta">
+      <div class="art-author-chip">
+        <div class="av">MR</div>
+        <div>
+          <div class="av-name">Marcial Rivera</div>
+          <div class="av-role">Investigaci&oacute;n y An&aacute;lisis</div>
+        </div>
+      </div>
+      <div class="art-edition">Auditor&iacute;a de Vivienda de Inter&eacute;s Social &nbsp;·&nbsp; XII Informe 2023</div>
+    </div>
+  </div>
+
+  <div class="art-body">
+    <div class="art-main">
+      <p class="art-lead">
+        La Auditor&iacute;a de Viviendas de Inter&eacute;s Social no es solo un proceso t&eacute;cnico: es un recorrido por las realidades, sue&ntilde;os y desaf&iacute;os de las familias del pa&iacute;s.
+      </p>
+      <p class="art-text">
+        Cada a&ntilde;o visitamos <strong>270 hogares seleccionados de forma aleatoria</strong>, y aunque los mapas nos gu&iacute;an, son los caminos &mdash;a veces sencillos, a veces inesperados&mdash; los que nos recuerdan la verdadera raz&oacute;n de este trabajo.
+      </p>
+      <p class="art-text">
+        En esta edici&oacute;n, el equipo recorri&oacute; territorios muy distintos: M&oacute;nica cruz&oacute; el r&iacute;o Telire para llegar al territorio ind&iacute;gena de Talamanca; Valeria atraves&oacute; Guanacaste de punta a punta y gan&oacute; un nuevo amigo de cuatro patas; Esteban camin&oacute; los seis cantones de Lim&oacute;n; Dennis traz&oacute; rutas precisas para la zona norte; do&ntilde;a Yola, incansable, recorri&oacute; todo el pa&iacute;s; y Erick lleg&oacute; hasta los rincones m&aacute;s complicados en Acosta y Zarcero.
+      </p>
+      <p class="art-text">
+        En el camino, Esteban, Marielos y Sheyla, de Oficinas Regionales, nos acompa&ntilde;aron tambi&eacute;n a escribir esta historia.
+      </p>
+
+      <div class="pullquote">
+        <div class="pullquote-text">
+          &ldquo;Para construir vivienda segura y resiliente, tenemos que conocer las historias de quienes viven dentro de ellos.&rdquo;
+        </div>
+        <div class="pullquote-src">&#9632; Cita destacada &nbsp;·&nbsp; Auditor&iacute;a de Vivienda de Inter&eacute;s Social</div>
+      </div>
+
+      <div class="art-h2">M&aacute;s que datos: sentido en el territorio</div>
+      <p class="art-text">
+        Cada casa que visitamos nos ense&ntilde;a algo. No evaluamos solo el estado de una vivienda: conocemos a las personas, escuchamos sus historias y confirmamos que una casa segura &mdash;financiada entre todos&mdash; puede transformar vidas.
+      </p>
+      <p class="art-text">
+        En el territorio, m&aacute;s que datos, encontramos sentido. Porque un hogar digno es tambi&eacute;n un hogar lleno de esperanza.
+      </p>
+      <p class="art-text" style="font-size:.72rem; color:var(--slate-mid); margin-top:.5rem;">
+        <strong>Fuente:</strong> XII Informe de Auditor&iacute;a de Vivienda de Inter&eacute;s Social 2023 &mdash;
+        <a href="https://cfia.or.cr/site/wp-content/uploads/2024/pdf/descargas/informes/xii-auditoria.pdf" style="color:var(--teal-dim);">cfia.or.cr</a>
+      </p>
+    </div>
+
+    <div class="art-sidebar">
+      <div>
+        <div class="sb-label">&#9632; Datos clave</div>
+        <div class="sb-stat">
+          <div class="sb-stat-num">270</div>
+          <div class="sb-stat-lbl">Hogares visitados<br>por edici&oacute;n (aleatorio)</div>
+        </div>
+      </div>
+      <div>
+        <div class="sb-label">&#9632; Territorios recorridos</div>
+        <div class="kf"><div class="kf-dot"></div><div class="kf-text">Talamanca &mdash; territorio ind&iacute;gena, cruce del r&iacute;o Telire</div></div>
+        <div class="kf"><div class="kf-dot"></div><div class="kf-text">Guanacaste &mdash; recorrido completo de la provincia</div></div>
+        <div class="kf"><div class="kf-dot"></div><div class="kf-text">Lim&oacute;n &mdash; seis cantones completos</div></div>
+        <div class="kf"><div class="kf-dot"></div><div class="kf-text">Zona Norte &mdash; rutas estrat&eacute;gicas trazadas</div></div>
+        <div class="kf"><div class="kf-dot"></div><div class="kf-text">Acosta y Zarcero &mdash; zonas de dif&iacute;cil acceso</div></div>
+        <div class="kf"><div class="kf-dot"></div><div class="kf-text">Todo el pa&iacute;s &mdash; recorrido integral</div></div>
+      </div>
+      <div>
+        <div class="sb-label">&#9632; Equipo de campo</div>
+        <div class="kf-text" style="font-size:.68rem; color:var(--slate); line-height:1.6;">
+          M&oacute;nica, Valeria, Esteban, Dennis, Do&ntilde;a Yola, Erick<br>
+          <span style="color:var(--slate-mid);">+ Oficinas Regionales: Esteban, Marielos, Sheyla</span>
+        </div>
+      </div>
+      <div>
+        <div class="sb-label">&#9632; Fuente</div>
+        <div class="sb-fuente">XII Informe de Auditor&iacute;a de Vivienda de Inter&eacute;s Social 2023</div>
+      </div>
+    </div>
+  </div>
+  <div class="pg-num" style="color:var(--slate-light);">03 / 05</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 4 — CAMBIO CLIMÁTICO (2 artículos)
+════════════════════════════════════════════════ -->
+<section class="page twoart" id="page-4">
+
+  <!-- Artículo 4a: Código de Adaptación al CC -->
+  <div class="twoart-section">
+    <div class="twoart-header">
+      <div class="art-header-grid"></div>
+      <div class="twoart-dept">Sostenibilidad &amp; Cambio Clim&aacute;tico &nbsp;·&nbsp; Laura Porras Herrera &nbsp;·&nbsp; Febrero 2026 &nbsp;·&nbsp; 1&ordf; edici&oacute;n</div>
+      <div class="twoart-title">C&oacute;digo de Adaptaci&oacute;n al Cambio Clim&aacute;tico: preparando la infraestructura del pa&iacute;s ante los desaf&iacute;os del clima</div>
+    </div>
+    <div class="twoart-body">
+      <div class="twoart-main">
+        <p class="twoart-lead">
+          Una iniciativa &uacute;nica en el mundo: Costa Rica desarrolla el primer C&oacute;digo de Adaptaci&oacute;n al Cambio Clim&aacute;tico para infraestructura, junto con MINAE, ONU-H&aacute;bitat y el CFIA.
+        </p>
+        <p class="twoart-text">
+          El C&oacute;digo para infraestructura es una iniciativa pa&iacute;s desarrollada en conjunto entre el <strong>Ministerio de Ambiente y Energ&iacute;a (MINAE), ONU-H&aacute;bitat y el CFIA</strong>. Su principal objetivo es preparar mejor a Costa Rica frente a los efectos del cambio clim&aacute;tico en sectores clave como vivienda, agua y saneamiento e infraestructura vial.
+        </p>
+        <p class="twoart-text">
+          A trav&eacute;s de este C&oacute;digo, se pretende contar con reglas claras y pr&aacute;cticas que ayuden a que la infraestructura del pa&iacute;s sea m&aacute;s segura, duradera y capaz de responder a los desaf&iacute;os del clima. En la actualidad <strong>no existe un instrumento similar en ning&uacute;n pa&iacute;s del mundo</strong>, lo que posiciona a Costa Rica como un referente internacional en soluciones innovadoras frente al cambio clim&aacute;tico.
+        </p>
+        <p class="twoart-text">
+          El pa&iacute;s logr&oacute; acceder a <strong>financiamiento internacional</strong> (Green Climate Fund) para desarrollar esta iniciativa, lo que refleja la confianza de la comunidad internacional en sus capacidades t&eacute;cnicas e institucionales. Para el CFIA, este proyecto representa una oportunidad para aportar conocimiento y contribuir a que las decisiones futuras se basen en informaci&oacute;n confiable.
+        </p>
+        <div class="twoart-pullquote">
+          <div class="pullquote-text" style="font-size:.82rem;">&ldquo;Este proyecto posiciona a Costa Rica como pa&iacute;s pionero a nivel mundial en el desarrollo de un C&oacute;digo de Adaptaci&oacute;n al Cambio Clim&aacute;tico para infraestructura.&rdquo;</div>
+          <div class="pullquote-src" style="font-size:.5rem;">&#9632; Cita destacada &nbsp;·&nbsp; &Aacute;rea Cambio Clim&aacute;tico / CFIA</div>
+        </div>
+        <p style="font-size:.65rem; color:var(--slate-mid); margin-top:.6rem; font-family:'Barlow',sans-serif; line-height:1.4;">
+          Fuente: Green Climate Fund. (2024). Approved readiness proposal: CRI004. greenclimate.fund
+        </p>
+      </div>
+      <div class="twoart-sidebar">
+        <div>
+          <div class="sb-label">&#9632; Actores clave</div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">MINAE &mdash; Ministerio de Ambiente y Energ&iacute;a</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">ONU-H&aacute;bitat</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">CFIA &mdash; Aporte t&eacute;cnico y normativo</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Green Climate Fund &mdash; Financiamiento internacional</div></div>
+        </div>
+        <div>
+          <div class="sb-label">&#9632; Sectores cubiertos</div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Vivienda</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Agua y saneamiento</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Infraestructura vial</div></div>
+        </div>
+        <div class="sb-stat">
+          <div class="sb-stat-num" style="font-size:1rem; color:var(--teal); font-weight:800; font-family:'Montserrat',sans-serif;">1.&ordm; en el</div>
+          <div class="sb-stat-num" style="font-size:1rem; color:var(--teal); font-family:'Montserrat',sans-serif;">mundo</div>
+          <div class="sb-stat-lbl">C&oacute;digo de este tipo a nivel global</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Artículo 4b: Día Mundial de la Ingeniería Sostenible -->
+  <div class="twoart-section">
+    <div class="twoart-header">
+      <div class="art-header-grid"></div>
+      <div class="twoart-dept orange">D&iacute;a Mundial de la Ingenier&iacute;a para el Desarrollo Sostenible &nbsp;·&nbsp; Vivian Monge Alvarado &nbsp;·&nbsp; Febrero 2026</div>
+      <div class="twoart-title">El agua como sistema: ingenier&iacute;a en comunidades resilientes</div>
+    </div>
+    <div class="twoart-body">
+      <div class="twoart-main">
+        <p class="twoart-lead">
+          En Costa Rica, cerca del <strong>28% de la poblaci&oacute;n</strong> recibe agua potable mediante acueductos administrados por ASADAS. La ingenier&iacute;a sostenible es la clave para su resiliencia.
+        </p>
+        <p class="twoart-text">
+          Desde la ingenier&iacute;a, estos acueductos deben entenderse como sistemas integrados, donde la fuente, la captaci&oacute;n, el almacenamiento, la conducci&oacute;n, la distribuci&oacute;n y la gesti&oacute;n operativa est&aacute;n estrechamente interrelacionados. Diagn&oacute;sticos t&eacute;cnicos indican que los niveles de agua no contabilizada pueden superar el <strong>30% en promedio</strong> del volumen producido (Al Kathiri et al., 2025), con casos locales superiores al 50% (Morales, 2019).
+        </p>
+        <p class="twoart-text">
+          La ingenier&iacute;a sostenible aporta herramientas clave: diagn&oacute;sticos hidr&aacute;ulicos, modelaci&oacute;n de redes, an&aacute;lisis de demanda, control de presiones, protecci&oacute;n de fuentes y dise&ntilde;o adaptado a escenarios de variabilidad clim&aacute;tica. Aplicar estos criterios permite reducir p&eacute;rdidas, optimizar inversiones y mejorar la confiabilidad del servicio.
+        </p>
+        <div class="twoart-pullquote orange">
+          <div class="pullquote-text" style="font-size:.8rem;">&ldquo;La ingenier&iacute;a convierte datos y dise&ntilde;o en seguridad h&iacute;drica comunitaria.&rdquo;</div>
+          <div class="pullquote-src" style="font-size:.5rem; color:var(--orange);">&#9632; Vivian Monge Alvarado &nbsp;·&nbsp; &Aacute;rea Cambio Clim&aacute;tico</div>
+        </div>
+        <p style="font-size:.63rem; color:var(--slate-mid); margin-top:.5rem; font-family:'Barlow',sans-serif; line-height:1.4;">
+          ASADAS: Asociaciones Administradoras de Sistemas de Acueductos y Alcantarillados Comunales.
+        </p>
+      </div>
+      <div class="twoart-sidebar">
+        <div>
+          <div class="sb-label">&#9632; Cifras</div>
+          <div class="sb-stat orange">
+            <div class="sb-stat-num">28%</div>
+            <div class="sb-stat-lbl">Poblaci&oacute;n con agua por ASADAS en CR</div>
+          </div>
+        </div>
+        <div>
+          <div class="sb-label">&#9632; Riesgo t&eacute;cnico</div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Agua no contabilizada &gt;30% del volumen producido (promedio)</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Casos locales reportados: m&aacute;s del 50% (Morales, 2019)</div></div>
+        </div>
+        <div>
+          <div class="sb-label">&#9632; Herramientas clave</div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Diagn&oacute;sticos hidr&aacute;ulicos</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Modelaci&oacute;n de redes</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Control de presiones</div></div>
+          <div class="kf"><div class="kf-dot"></div><div class="kf-text">Dise&ntilde;o ante variabilidad clim&aacute;tica</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pg-num" style="color:var(--slate-light);">04 / 05</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 5 — PRS + BAECS (Ed.1 + Ed.2)
+════════════════════════════════════════════════ -->
+<section class="page combo" id="page-5">
+  <div class="combo-header">
+    <div class="combo-grid"></div>
+    <div class="combo-top">
+      <div>
+        <div class="combo-label">&#9632; Sostenibilidad &amp; Responsabilidad Solidaria</div>
+        <div class="combo-title">BAECS &amp; <span>Voluntariado</span><br>Programa PRS</div>
+      </div>
+      <div class="combo-badge">Ediciones 1 y 2 &nbsp;·&nbsp; Feb &amp; Abr 2026<br>Sostenibilidad &amp; Resp. Solidaria</div>
+    </div>
+  </div>
+
+  <div class="combo-cards">
+
+    <!-- BAECS Ed. 1 -->
+    <div class="combo-card teal">
+      <div class="cc-dept">&#9632; Sostenibilidad &nbsp;·&nbsp; Marielieth Garro Mora &nbsp;·&nbsp; 13/02/2026 &nbsp;·&nbsp; 1&ordf; ed.</div>
+      <div class="cc-title">Bandera Azul Construcci&oacute;n Sostenible (BAECS) y voluntariado ambiental CFIA</div>
+      <div class="cc-text">
+        Se otorg&oacute; el gal&aacute;rdon BAECS en modalidad <strong>Dise&ntilde;o</strong> al proyecto <strong>N&uacute;cleo Sabana &mdash; Torre Sencia</strong> con nota final de 87,06. En modalidad Construcci&oacute;n, se inspeccion&oacute; una vivienda en Gu&aacute;piles y el proyecto Marvin Gardens en Zona Franca La Lima. Tambi&eacute;n se realizaron inspecciones en modalidad Dise&ntilde;o a las escuelas <strong>Carlos Peralta y Marcelino Garc&iacute;a</strong> del programa PROERI-MEP.
+      </div>
+      <div class="cc-text">
+        Como parte del compromiso ambiental, se realizaron dos jornadas de voluntariado en el <strong>Refugio de Vida Silvestre La Marta</strong>, con la participaci&oacute;n de <strong>29 personas voluntarias</strong>. Se realiz&oacute; adem&aacute;s la campa&ntilde;a de reciclaje de enero, procesando <strong>1,1265 toneladas</strong> con gestor autorizado.
+      </div>
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.4rem;">
+        <span class="cc-badge ccb-teal">BAECS Dise&ntilde;o</span>
+        <span class="cc-badge ccb-teal">BAECS Construcci&oacute;n</span>
+        <span class="cc-badge ccb-teal">Voluntariado</span>
+      </div>
+    </div>
+
+    <!-- BAECS Ed. 2 -->
+    <div class="combo-card teal">
+      <div class="cc-dept">&#9632; Sostenibilidad &nbsp;·&nbsp; Marielieth Garro Mora &nbsp;·&nbsp; 6/04/2026 &nbsp;·&nbsp; 2&ordf; ed.</div>
+      <div class="cc-title">BAECS y voluntariado ambiental CFIA &mdash; Continuaci&oacute;n</div>
+      <div class="cc-text">
+        En marzo y abril 2026 se otorg&oacute; el gal&aacute;rdon BAECS a los proyectos <strong>Puentes El Fierro</strong> y <strong>Museo del programa PROERI-INCOFER</strong>. En modalidad Construcci&oacute;n se realiz&oacute; la inspecci&oacute;n del proyecto <strong>IVEREDAS Etapa 2</strong> (vivienda de inter&eacute;s social en Guanacaste).
+      </div>
+      <div class="cc-text">
+        Se impartieron capacitaciones sobre Bandera Azul a profesionales de <strong>UNOPS</strong> y sobre BAECS a personal de la <strong>Contralor&iacute;a General de la Rep&uacute;blica</strong>. Nuevas jornadas de voluntariado en La Marta con <strong>15 personas voluntarias</strong>. Reciclaje: aproximadamente <strong>1,5 toneladas</strong> procesadas (febrero-marzo).
+      </div>
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.4rem;">
+        <span class="cc-badge ccb-teal">PROERI-INCOFER</span>
+        <span class="cc-badge ccb-teal">Capacitaci&oacute;n UNOPS</span>
+        <span class="cc-badge ccb-teal">Contralor&iacute;a</span>
+      </div>
+    </div>
+
+    <!-- PRS -->
+    <div class="combo-card orange" style="grid-column: 1 / -1;">
+      <div class="cc-dept orange">&#9632; Programa Responsabilidad Solidaria (PRS) &nbsp;·&nbsp; Arq. Deganit S&aacute;nchez Acevedo &nbsp;·&nbsp; 16/02/2026 &nbsp;·&nbsp; 1&ordf; ed.</div>
+      <div class="cc-title">Ingenieros y Arquitectos solidariamente comprometidos con el desarrollo social y econ&oacute;mico del pa&iacute;s</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:.5rem;">
+        <div>
+          <div class="cc-text">
+            El CFIA se posiciona en la sociedad con el <strong>Programa Responsabilidad Solidaria (PRS)</strong>, que sirve de enlace entre organizaciones e instituciones con un mismo objetivo social. El PRS brinda aporte a instituciones y organizaciones p&uacute;blicas y privadas de escasos recursos econ&oacute;micos, para la soluci&oacute;n de necesidades sostenibles dentro de los servicios de las ingenier&iacute;as y la arquitectura.
+          </div>
+          <div class="cc-text">
+            Entre los proyectos que se atienden destacan: <strong>centros diurnos de asistencia social, infraestructura educativa, instalaciones comunales y deportivas</strong>, entre otros.
+          </div>
+        </div>
+        <div>
+          <div class="cc-text">
+            En funci&oacute;n del tipo de proyecto, el programa puede donar lo correspondiente a la primera fase: <strong>estudios preliminares, anteproyecto y planos constructivos</strong>, tramitados ante el CFIA y las instituciones correspondientes. Tambi&eacute;n se donan segregaciones y levantamientos topogr&aacute;ficos, seg&uacute;n el caso.
+          </div>
+          <div class="cc-quote orange">
+            <div class="cc-quote-text">&ldquo;Una opci&oacute;n para profesionales en las &aacute;reas de las ingenier&iacute;as y la arquitectura que deseen formar parte de esta &lsquo;Alianza profesional con compromiso social&rsquo;.&rdquo;</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem;">
+        <span class="cc-badge ccb-orange">Centros Diurnos</span>
+        <span class="cc-badge ccb-orange">Infraestructura Educativa</span>
+        <span class="cc-badge ccb-orange">Instalaciones Comunales</span>
+        <span class="cc-badge ccb-orange">Planos Constructivos</span>
+        <span class="cc-badge ccb-orange">Fuente: PRS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="combo-stat-row">
+    <div class="csr">
+      <div class="csr-val">29</div>
+      <div class="csr-lbl">Voluntarios La Marta (Ed.1)</div>
+    </div>
+    <div class="csr">
+      <div class="csr-val">15</div>
+      <div class="csr-lbl">Voluntarios La Marta (Ed.2)</div>
+    </div>
+    <div class="csr">
+      <div class="csr-val">1.1<span class="unit">t</span></div>
+      <div class="csr-lbl">Reciclaje enero (Ed.1)</div>
+    </div>
+    <div class="csr">
+      <div class="csr-val">1.5<span class="unit">t</span></div>
+      <div class="csr-lbl">Reciclaje feb-mar (Ed.2)</div>
+    </div>
+  </div>
+
+  <div class="combo-footer">
+    <div class="cf-l">Bolet&iacute;n DPI &nbsp;·&nbsp; Edici&oacute;n 1 &nbsp;·&nbsp; Febrero &ndash; Abril 2026</div>
+    <div class="cf-r">CFIA &mdash; Departamento de Planificaci&oacute;n Institucional</div>
+  </div>
+  <div class="pg-num">05 / 05</div>
+</section>
+
+</div><!-- .page-container -->
+
+<script>
+const pages = document.querySelectorAll('.page');
+const labels = [
+  '01 / 05 — Portada',
+  '02 / 05 — Índice',
+  '03 / 05 — Auditoría de Vivienda',
+  '04 / 05 — Cambio Climático',
+  '05 / 05 — BAECS & PRS'
+];
+let current = 0;
+
+function buildDots() {
+  const c = document.getElementById('dots');
+  pages.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goToPage(i + 1);
+    c.appendChild(d);
+  });
+}
+
+function goToPage(n) {
+  const idx = n - 1;
+  if (idx < 0 || idx >= pages.length) return;
+  pages[current].classList.remove('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  current = idx;
+  pages[current].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.add('active');
+  document.getElementById('pageLabel').textContent = labels[current];
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === pages.length - 1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changePage(dir) { goToPage(current + 1 + dir); }
+
+buildDots();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changePage(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   changePage(-1);
+});
+</script>
+</body>
+</html>
